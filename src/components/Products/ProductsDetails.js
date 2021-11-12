@@ -4,12 +4,12 @@ import { useParams } from 'react-router';
 import { useProducts } from '../../contexts/ProductsContext';
 import MySpinner from '../../shared/MySpinner';
 import {
-  CarouselProvider,
+  ImageWithZoom,
   Slider,
+  CarouselProvider,
   Slide,
   ButtonBack,
   ButtonNext,
-  ImageWithZoom,
 } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductsDetails = (props) => {
+const ProductsDetails = () => {
   const { fetchOneProduct, productDetails } = useProducts();
   const { id } = useParams();
 
@@ -59,7 +59,6 @@ const ProductsDetails = (props) => {
               <ButtonNext>Next</ButtonNext>
             </CarouselProvider>
           </Grid>
-
           <Grid item md={6}>
             <Paper elevation={3} className={classes.paper}>
               <table>
@@ -68,7 +67,6 @@ const ProductsDetails = (props) => {
                     <th>Title:</th>
                     <td>{productDetails.title}</td>
                   </tr>
-
                   <tr>
                     <th>Price:</th>
                     <td>{productDetails.price}</td>
@@ -85,22 +83,18 @@ const ProductsDetails = (props) => {
                     <th>Description:</th>
                     <td>{productDetails.description}</td>
                   </tr>
-
                   <tr>
                     <th>Phone:</th>
                     <td>{productDetails.phone}</td>
                   </tr>
-
                   <tr>
                     <th>Author:</th>
                     <td>{productDetails.author}</td>
                   </tr>
-
                   <tr>
                     <th>Category:</th>
                     <td>{productDetails.category}</td>
                   </tr>
-
                   <tr>
                     <th>Count in Stock:</th>
                     <td>{productDetails.countInStock}</td>

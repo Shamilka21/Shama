@@ -3,11 +3,11 @@ import ProductsDetails from '../components/Products/ProductsDetails';
 import MainLayout from '../layouts/MainLayout';
 
 const Product = () => {
-    return (
+  return (
     <MainLayout>
-        <ProductsDetails/>
+      <ProductsDetails />
     </MainLayout>
-    )
+  );
 };
 
 export default Product;
