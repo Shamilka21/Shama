@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import React, { createContext, useContext, useReducer } from 'react';
 import { $api } from '../service/axios-config';
 import { calcSubPrice, calcTotalPrice } from '../utils/calc';
-=======
-import React, { createContext, useContext, useReducer } from "react";
-import { $api } from "../service/axios-config";
-import { calcSubPrice, calcTotalPrice } from "../utils/calc";
->>>>>>> c3fd94efd0b93d2e59985de06a42c2af4368a2c3
 import {
   ADD_AND_DELETE_PRODUCT_IN_CART,
   GET_CART,
@@ -16,17 +10,17 @@ import {
   GET_PRODUCT_ERROR,
   GET_PRODUCT_LOADING,
   GET_PRODUCT_SUCCESS,
-} from "../utils/constants";
+} from '../utils/constants';
 import {
   productError,
   productLoading,
   productSuccess,
-} from "./actions/productDetailsActions";
+} from './actions/productDetailsActions';
 import {
   productsError,
   productsLoading,
   productsSuccess,
-} from "./actions/productsActions";
+} from './actions/productsActions';
 
 const productsContext = createContext();
 
@@ -41,13 +35,8 @@ const initialState = {
     error: null,
     product: null,
   },
-<<<<<<< HEAD
   cartData: JSON.parse(localStorage.getItem('cart'))
     ? JSON.parse(localStorage.getItem('cart')).products.length
-=======
-  cartData: JSON.parse(localStorage.getItem("cart"))
-    ? JSON.parse(localStorage.getItem("cart")).products.length
->>>>>>> c3fd94efd0b93d2e59985de06a42c2af4368a2c3
     : 0,
   cart: {},
 };
@@ -143,11 +132,7 @@ const ProductsContext = ({ children }) => {
   };
 
   const addAndDeleteProductInCart = (product) => {
-<<<<<<< HEAD
     let cart = JSON.parse(localStorage.getItem('cart'));
-=======
-    let cart = JSON.parse(localStorage.getItem("cart"));
->>>>>>> c3fd94efd0b93d2e59985de06a42c2af4368a2c3
     if (!cart) {
       cart = {
         products: [],
@@ -161,18 +146,10 @@ const ProductsContext = ({ children }) => {
     };
     newProduct.subPrice = calcSubPrice(newProduct);
 
-<<<<<<< HEAD
-    // DELETE FROM CART
-    let newCart = cart.products.filter(
-      (item) => item.product.id === product.id
-    );
-
-=======
     //DELETE FROM CART
     let newCart = cart.products.filter(
       (item) => item.product.id === product.id
     );
->>>>>>> c3fd94efd0b93d2e59985de06a42c2af4368a2c3
     if (newCart.length > 0) {
       cart.products = cart.products.filter(
         (item) => item.product.id !== product.id
@@ -182,11 +159,7 @@ const ProductsContext = ({ children }) => {
     }
 
     cart.totalPrice = calcTotalPrice(cart.products);
-<<<<<<< HEAD
     localStorage.setItem('cart', JSON.stringify(cart));
-=======
-    localStorage.setItem("cart", JSON.stringify(cart));
->>>>>>> c3fd94efd0b93d2e59985de06a42c2af4368a2c3
 
     dispatch({
       type: ADD_AND_DELETE_PRODUCT_IN_CART,
@@ -195,11 +168,7 @@ const ProductsContext = ({ children }) => {
   };
 
   const getCart = () => {
-<<<<<<< HEAD
     let cartFromLS = JSON.parse(localStorage.getItem('cart'));
-=======
-    let cartFromLS = JSON.parse(localStorage.getItem("cart"));
->>>>>>> c3fd94efd0b93d2e59985de06a42c2af4368a2c3
     dispatch({
       type: GET_CART,
       payload: cartFromLS,
