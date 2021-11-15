@@ -7,7 +7,10 @@ const Cart = () => {
   useEffect(() => {
     getCart();
   }, []);
-  console.log(cart, 'here');
+
+  const handleCountChange = ({ value }, id) => {};
+
+  // console.log(cart, 'here');
   return (
     <div>
       {cart && cart.products ? (
@@ -35,7 +38,13 @@ const Cart = () => {
                   <td>{item.product.title}</td>
                   <td>{item.product.price}</td>
                   <td>
-                    <input type="number" value={item.count} />
+                    <input
+                      type="number"
+                      value={item.count}
+                      onChange={(e) =>
+                        handleCountChange(e.target, item.product.id)
+                      }
+                    />
                   </td>
                   <td>{item.subPrice}</td>
                 </tr>

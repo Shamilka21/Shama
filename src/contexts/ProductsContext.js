@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { $api } from '../service/axios-config';
 import { calcSubPrice, calcTotalPrice } from '../utils/calc';
+import { checkItemInCart } from '../utils/check-item-cart';
 import {
   ADD_AND_DELETE_PRODUCT_IN_CART,
   GET_CART,
@@ -147,10 +148,11 @@ const ProductsContext = ({ children }) => {
     newProduct.subPrice = calcSubPrice(newProduct);
 
     //DELETE FROM CART
-    let newCart = cart.products.filter(
-      (item) => item.product.id === product.id
-    );
-    if (newCart.length > 0) {
+    // let newCart = cart.products.filter(
+    //   (item) => item.product.id === product.id
+    // );
+    const isItemInCart = checkItemInCart(cart.products, product.id);
+    if (isItemInCart) {
       cart.products = cart.products.filter(
         (item) => item.product.id !== product.id
       );
@@ -172,6 +174,17 @@ const ProductsContext = ({ children }) => {
     dispatch({
       type: GET_CART,
       payload: cartFromLS,
+    });
+  };
+
+  const changeCountProductCount = (newCount, id) => {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    cart.products = cart.products.map((item) => {
+      if (item.product.id === id) {
+        item.count = newCount;
+        item.subPrice = calcSubPrice(item);
+      }
+      return item;
     });
   };
 

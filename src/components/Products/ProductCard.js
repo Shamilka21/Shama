@@ -12,6 +12,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Shop } from '@material-ui/icons';
 import MyLink from '../../shared/MyLink';
 import { useProducts } from '../../contexts/ProductsContext';
+import { checkItemInCart } from '../../utils/check-item-cart';
 
 const useStyles = makeStyles({
   root: {
@@ -29,7 +30,14 @@ const useStyles = makeStyles({
 const ProductCard = ({ product }) => {
   const classes = useStyles();
 
-  const { addAndDeleteProductInCart } = useProducts();
+  const { addAndDeleteProductInCart, cart } = useProducts();
+
+  const isItemInCart = () => {
+    if (cart) {
+      return checkItemInCart(cart.products, product.id);
+    }
+    return false;
+  };
 
   return (
     <Card className={classes.root}>
@@ -65,7 +73,7 @@ const ProductCard = ({ product }) => {
         </CardActionArea>
       </MyLink>
       <CardActions className={classes.actions}>
-        <IconButton>
+        <IconButton color={isItemInCart() ? 'secondary' : 'default'}>
           <ShoppingCartIcon />
         </IconButton>
         <Button
