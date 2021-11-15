@@ -16,6 +16,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import MyLink from '../../shared/MyLink';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { useProducts } from '../../contexts/ProductsContext';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -84,6 +85,8 @@ export default function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const { cartData } = useProducts();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -199,11 +202,13 @@ export default function Header() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show car items" color="inherit">
-              <Badge badgeContent={1} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <MyLink to="/cart">
+              <IconButton aria-label="show car items" color="inherit">
+                <Badge badgeContent={cartData} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </MyLink>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
