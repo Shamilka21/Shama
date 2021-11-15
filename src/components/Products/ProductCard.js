@@ -15,6 +15,7 @@ import { useProducts } from '../../contexts/ProductsContext';
 import { checkItemInCart } from '../../utils/check-item-cart';
 
 const useStyles = makeStyles({
+<<<<<<< HEAD
   root: {
     maxWidth: '100%',
   },
@@ -25,11 +26,24 @@ const useStyles = makeStyles({
   actions: {
     justifyContent: 'space-between',
   },
+=======
+    root: {
+        maxWidth: '100%',
+    },
+    media: {
+        height: 200,
+        backgroundSize: 'contain',
+    },
+    actions: {
+        justifyContent: 'space-between',
+    },
+>>>>>>> 4a06c82a1da6b0b7bb82cb62ca84aea0dba49711
 });
 
-const ProductCard = ({ product }) => {
-  const classes = useStyles();
+const ProductCard = ({ product, cart }) => {
+    const classes = useStyles();
 
+<<<<<<< HEAD
   const { addAndDeleteProductInCart, cart } = useProducts();
 
   const isItemInCart = () => {
@@ -87,6 +101,56 @@ const ProductCard = ({ product }) => {
       </CardActions>
     </Card>
   );
+=======
+    const { addAndDeleteProductInCart } = useProducts();
+
+    const isItemInCart = () => {
+        if (cart) {
+            return checkItemInCart(cart.products, product.id);
+        }
+        return false;
+    };
+
+    return (
+        <Card className={classes.root}>
+            <MyLink to={`/product/${product.id}`}>
+                <CardActionArea>
+                    <CardMedia className={classes.media} image={product.image} title="Contemplative Reptile" />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {product.title}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom color="textSecondary" component="p">
+                            {product.description}
+                        </Typography>
+                        <Typography variant="subtitle1" color="textPrimary" component="p">
+                            Цена: {product.price} сом
+                        </Typography>
+                        <Typography variant="subtitle1" color="textPrimary" component="p">
+                            Память: {product.category} гб
+                        </Typography>
+                        <Typography variant="subtitle1" color="textPrimary" component="p">
+                            В наличии: {product.countInStock} шт
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </MyLink>
+            <CardActions className={classes.actions}>
+                <IconButton color={isItemInCart() ? 'secondary' : 'default'}>
+                    <ShoppingCartIcon />
+                </IconButton>
+                <Button
+                    onClick={() => addAndDeleteProductInCart(product)}
+                    color="primary"
+                    variant="contained"
+                    startIcon={<Shop />}
+                >
+                    Купить
+                </Button>
+            </CardActions>
+        </Card>
+    );
+>>>>>>> 4a06c82a1da6b0b7bb82cb62ca84aea0dba49711
 };
 
 export default ProductCard;
