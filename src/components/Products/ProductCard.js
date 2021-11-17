@@ -32,6 +32,7 @@ const ProductCard = ({ product, cart }) => {
 
   const { addAndDeleteProductInCart } = useProducts();
 
+<<<<<<< HEAD
   const isItemInCart = () => {
     if (cart) {
       return checkItemInCart(cart.products, product.id);
@@ -87,6 +88,57 @@ const ProductCard = ({ product, cart }) => {
       </CardActions>
     </Card>
   );
+=======
+    const isItemInCart = () => {
+        if (cart) {
+            // console.log(checkItemInCart(cart.products, 0));
+            return checkItemInCart(cart.products, product.id);
+        }
+        return false;
+    };
+
+    const inCart = isItemInCart();
+
+    return (
+        <Card className={classes.root}>
+            <MyLink to={`/product/${product.id}`}>
+                <CardActionArea>
+                    <CardMedia className={classes.media} image={product.image} title="Contemplative Reptile" />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {product.title}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom color="textSecondary" component="p">
+                            {product.description}
+                        </Typography>
+                        <Typography variant="subtitle1" color="textPrimary" component="p">
+                            Цена: {product.price} сом
+                        </Typography>
+                        <Typography variant="subtitle1" color="textPrimary" component="p">
+                            Память: {product.category} гб
+                        </Typography>
+                        <Typography variant="subtitle1" color="textPrimary" component="p">
+                            В наличии: {product.countInStock} шт
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </MyLink>
+            <CardActions className={classes.actions}>
+                <IconButton color={inCart ? 'secondary' : 'default'}>
+                    <ShoppingCartIcon />
+                </IconButton>
+                <Button
+                    onClick={() => addAndDeleteProductInCart(product)}
+                    color="primary"
+                    variant="contained"
+                    startIcon={<Shop />}
+                >
+                    Купить
+                </Button>
+            </CardActions>
+        </Card>
+    );
+>>>>>>> a9b04e6d708cca4bd0f4964988c814f8faf366f9
 };
 
 export default ProductCard;
