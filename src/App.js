@@ -3,13 +3,13 @@ import ProductsContext from './contexts/ProductsContext';
 import AppRoutes from './routes';
 
 function App() {
-    return (
-        <ProductsContext>
-            <BrowserRouter>
-                <AppRoutes />
-            </BrowserRouter>
-        </ProductsContext>
-    );
+  return (
+    <BrowserRouter>
+      <ProductsContext>
+        <AppRoutes />
+      </ProductsContext>
+    </BrowserRouter>
+  );
 }
 
 export default App;

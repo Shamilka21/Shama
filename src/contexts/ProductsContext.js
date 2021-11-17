@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import { $api } from '../service/axios-config';
 import { calcSubPrice, calcTotalPrice } from '../utils/calc';
 import { checkItemInCart } from '../utils/check-item-cart';
@@ -105,14 +106,16 @@ const reducer = (state, action) => {
 
 const ProductsContext = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const fetchProducts = async () => {
     dispatch(productsLoading());
     try {
-      const { data } = await $api();
+      const { data } = await $api(`${window.location.search}`);
       setTimeout(() => {
         dispatch(productsSuccess(data));
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.log(error.message);
       dispatch(productsError(error.message));
@@ -190,6 +193,16 @@ const ProductsContext = ({ children }) => {
     getCart();
   };
 
+  const fetchByParams = async (query, value) => {
+    if (value === 'all') {
+    }
+    const search = new URLSearchParams(location.search);
+    search.set(query, value);
+    const url = `${location.pathname}?${search.toString()}`;
+    navigate(url);
+    fetchProducts();
+  };
+
   const values = {
     products: state.products,
     loading: state.loading,
@@ -201,9 +214,10 @@ const ProductsContext = ({ children }) => {
     cart: state.cart,
     fetchProducts,
     fetchOneProduct,
+    changeProductCount,
     addAndDeleteProductInCart,
     getCart,
-    changeProductCount,
+    fetchByParams,
   };
 
   return (
