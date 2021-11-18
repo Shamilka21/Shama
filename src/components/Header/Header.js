@@ -17,6 +17,9 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import MyLink from '../../shared/MyLink';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useProducts } from '../../contexts/ProductsContext';
+import Search from './Search';
+import { Button, ClickAwayListener } from '@material-ui/core';
+import { useAuth } from '../../contexts/AuthContext';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -79,14 +82,20 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  searchBox: {
+    position: 'absolute',
+    top: '30px',
+    zIndex: 999,
+  },
 }));
 
 export default function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const { cartData } = useProducts(); // get length of the cart
+  const [searchActive, setSearchActive] = React.useState(false);
+  const { cartData, fetchSearchProducts } = useProducts(); // get length of the cart
+  const { registerUser, user, logOut } = useAuth(); // sign in with google firebase
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -102,6 +111,10 @@ export default function Header() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const handleSearch = (e) => {
+    fetchSearchProducts(e.target.value);
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -187,21 +200,48 @@ export default function Header() {
               Akim Shop
             </Typography>
           </MyLink>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+          <ClickAwayListener onClickAway={() => setSearchActive(false)}>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                onFocus={() => setSearchActive(true)}
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                onChange={handleSearch}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+              {searchActive && (
+                <div className={classes.searchBox}>
+                  <Search />
+                </div>
+              )}
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+          </ClickAwayListener>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            {/* <MyLink to="/register"> */}
+            {user ? (
+              <>
+                <p>{user.email}</p>
+                <IconButton onClick={() => logOut()} variant="contained">
+                  Log Out
+                </IconButton>
+              </>
+            ) : (
+              <Button
+                onClick={() => registerUser()}
+                variant="contained"
+                color="secondary"
+              >
+                Sign Up
+              </Button>
+            )}
+            {/* </MyLink> */}
             <MyLink to="/cart">
               <IconButton aria-label="show car items" color="inherit">
                 <Badge badgeContent={cartData} color="secondary">
